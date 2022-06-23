@@ -1,2 +1,19 @@
 /* create vars for  */
 /* eea196-ffaf47-8ebf73-ffffff-141f12 */
+
+:root{
+    --pink:#eea196;
+    --orange:#ffaf47;
+    --light-green:#8ebf73;
+    --white:#ffffff;
+    --dark-green:#141f12;
+}
+
+*,html,body{
+    margin: 0;
+    padding: 0;
+}
+
+nav{
+    padding:1rem 1rem;
+}
