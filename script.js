@@ -28,10 +28,10 @@ async function getWeatherData(cityInput, stateInput, countryCode) {
         const forecastInfo = await res[1].json();
 
         console.log(todayInfo, forecastInfo);
-        return [todayInfo, forecastInfo];
+        return [todayInfo.value, forecastInfo.value];
     } catch (error) {
         console.log(error);
     }
 }
 
-getWeatherData("columbia", "SC", "USA");
+// getWeatherData("columbia", "SC", "USA");

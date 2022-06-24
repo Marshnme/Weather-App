@@ -12,9 +12,31 @@
 *,html,body{
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
+main{
+    height:90vh;
+    background: var(--light-green);
+}
 nav{
     padding:1rem 1rem;
-    background: var(--pink)
+    color:white;
+    background: var(--dark-green);
+    display:flex;
+    justify-content: space-between;
+    align-items: center ;
+    position: sticky;
+}
+
+nav ul{
+    display:flex;
+    flex-flow:row nowrap;
+    text-decoration: none;
+    list-style: none;
+    
+}
+
+ul li{
+    padding:0rem 1rem;
 }
