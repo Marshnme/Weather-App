@@ -42,13 +42,23 @@ const getWeatherData = async (e) => {
 
 const form = document.querySelector("form");
 const weatherMessage = document.querySelector(".weather-message");
+const todayDetails = document.querySelector(".today-details");
 function displayWeatherData(data) {
     console.log(data);
     const [todaysInfo, forecast] = [...data];
     console.log(todaysInfo, forecast);
     weatherMessage.innerHTML = `
-	<img src=http://openweathermap.org/img/wn/${todaysInfo.weather[0].icon}@2x.png></img>
-	<h2>It's ${todaysInfo.weather[0].description}'s today! </h2>`;
+		<img src=http://openweathermap.org/img/wn/${todaysInfo.weather[0].icon}@2x.png></img>
+		<h2>It's ${todaysInfo.weather[0].description}'s today! </h2>`;
+
+    todayDetails.innerHTML = `
+		<h2>Today's Details</h2>
+		<p>Feels like: <span>${todaysInfo.main.feels_like}&#8457</span></p> 
+		<p>Temperature: <span>${todaysInfo.main.temp}&#8457</span></p> 
+		<p>Min Temp: <span>${todaysInfo.main.temp_min}&#8457</span></p> 
+		<p>Max Temp: <span>${todaysInfo.main.temp_max}&#8457</span></p> 
+		<p>Humidity: <span>${todaysInfo.main.humidity}%</span></p>
+	`;
 }
 
 form.addEventListener("submit", getWeatherData);
