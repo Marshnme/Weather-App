@@ -10,9 +10,10 @@ const getLatLon = async (cityInput, stateInput, countryCode) => {
         console.log(error);
     }
 };
+const search = document.getElementById("search");
 const getWeatherData = async (e) => {
     e.preventDefault();
-    const search = document.getElementById("search");
+
     const [cityInput, stateInput, countryCode] = [...search.value.split(",")];
     try {
         const [lat, lon] = await getLatLon(cityInput, stateInput, countryCode);
@@ -38,8 +39,6 @@ const getWeatherData = async (e) => {
     }
 };
 
-// getWeatherData("columbia", "SC", "USA");
-
 const form = document.querySelector("form");
 const weatherMessage = document.querySelector(".weather-message");
 const todayDetails = document.querySelector(".today-details");
@@ -47,9 +46,14 @@ function displayWeatherData(data) {
     console.log(data);
     const [todaysInfo, forecast] = [...data];
     console.log(todaysInfo, forecast);
+
     weatherMessage.innerHTML = `
-		<img src=http://openweathermap.org/img/wn/${todaysInfo.weather[0].icon}@2x.png></img>
-		<h2>It's ${todaysInfo.weather[0].description}'s today! </h2>`;
+		<img src=http://openweathermap.org/img/wn/${
+            todaysInfo.weather[0].icon
+        }@2x.png></img>
+		<h2>${capitalizeFirstLetter(
+            todaysInfo.weather[0].description
+        )} in ${capitalizeFirstLetter(search.value.split(",")[0])}!</h2>`;
 
     todayDetails.innerHTML = `
 		<h2>Today's Details</h2>
@@ -59,6 +63,10 @@ function displayWeatherData(data) {
 		<p>Max Temp: <span>${todaysInfo.main.temp_max}&#8457</span></p> 
 		<p>Humidity: <span>${todaysInfo.main.humidity}%</span></p>
 	`;
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 form.addEventListener("submit", getWeatherData);
