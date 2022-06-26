@@ -62,7 +62,7 @@ ul li:first-child{
 
 input{
     border-radius: 5px;
-    padding:.2rem 0;
+    padding:.5rem 0;
     padding-left: .5rem;
     border: none;
     outline:none;
@@ -72,7 +72,6 @@ input{
 
 main{
     background: var(--light-green);
-    /* height:100%; */
     display:grid;
     grid-template-columns: 1fr 2fr 1fr;
     grid-template-rows: 1fr 1fr;
