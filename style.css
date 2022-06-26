@@ -7,11 +7,30 @@
     --dark-green:#141f12;
 }
 
+*{
+    /* border:1px solid black; */
+
+}
+
 *,html,body{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* border:1px solid black; */
+}
+
+html{
+    height: 120vh;
+}
+
+body{
+    height:100%;
+    display:grid;
+    grid-template-areas: 
+    'nav nav nav'
+    'main main main'
+    'footer footer footer';
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 5rem 1fr 5rem;
 }
 
 nav{
@@ -22,6 +41,23 @@ nav{
     justify-content: space-between;
     align-items: center ;
     position: sticky;
+    grid-area: nav;
+}
+
+nav ul {
+    display: flex;
+    flex-flow: row nowrap;
+    text-decoration: none;
+    list-style: none;
+
+}
+
+ul li {
+    padding: 0rem .2rem;
+}
+
+ul li:first-child{
+    border-right: 1px solid black;
 }
 
 input{
@@ -30,39 +66,28 @@ input{
     padding-left: .5rem;
     border: none;
     outline:none;
-}
-
-.container{
-    background: var(--light-green);
+    max-width: 300px;
+    width: 30vw;
 }
 
 main{
-    height:90vh;
+    background: var(--light-green);
+    /* height:100%; */
     display:grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-areas: 'today-details message ...'
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+    '... message today-details'
     '... ... ...';
-    padding-top:5rem;
-}
-
-nav ul{
-    display:flex;
-    flex-flow:row nowrap;
-    text-decoration: none;
-    list-style: none;
-    
-}
-
-ul li{
-    padding:0rem 1rem;
+    padding-top:3rem;
+    grid-area: main;
 }
 
 .weather-message{
     grid-area: message;
     display: flex;
     flex-flow: column nowrap;
-    padding:2rem 3rem;
-    /* margin:0 auto; */
+    align-items: center;
 }
 
 .weather-message img {
@@ -71,10 +96,14 @@ ul li{
 
 
 .today-details{
-    padding:2rem 3rem;
     grid-area: today-details;
 }
 
 .today-details > *{
     padding: 1rem 1rem;
+}
+
+footer{
+    grid-area: footer;
+    background: var(--dark-green)
 }
