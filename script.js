@@ -1,4 +1,4 @@
-const getLatLon = async (cityInput, stateInput, countryCode) => {
+const getLatLon = async (cityInput) => {
     try {
         const res = await fetch(
             `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput}&limit=1&appid=b6845236a7811f015dd9b763581a389a`,
@@ -11,30 +11,34 @@ const getLatLon = async (cityInput, stateInput, countryCode) => {
     }
 };
 const search = document.getElementById("search");
-const getWeatherData = async (e) => {
+const getWeatherData = async (e, imperial = true) => {
     e.preventDefault();
 
-    const [cityInput, stateInput, countryCode] = [...search.value.split(",")];
+    const [cityInput] = [...search.value.split(",")];
     try {
-        const [lat, lon] = await getLatLon(cityInput, stateInput, countryCode);
+        const [lat, lon] = await getLatLon(cityInput);
         const todayInfoRes = fetch(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=b6845236a7811f015dd9b763581a389a`,
+            `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${
+                imperial ? "imperial" : "metric"
+            }&appid=b6845236a7811f015dd9b763581a389a`,
             { mode: "cors" }
         );
-        const forecastRes = fetch(
-            `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=b6845236a7811f015dd9b763581a389a`,
-            { mode: "cors" }
-        );
+        // const forecastRes = fetch(
+        //     `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=b6845236a7811f015dd9b763581a389a`,
+        //     { mode: "cors" }
+        // );
 
-        const res = await Promise.all([todayInfoRes, forecastRes]);
+        const res = await Promise.all([todayInfoRes]);
 
         const todayInfo = await res[0].json();
-        const forecastInfo = await res[1].json();
+        // const forecastInfo = await res[1].json();
 
-        console.log(todayInfo, forecastInfo);
-        const dataValues = [todayInfo, forecastInfo];
+        console.log(todayInfo);
+        const dataValues = [todayInfo, imperial];
         displayWeatherData(dataValues);
     } catch (error) {
+        weatherMessage.innerHTML = "<h2>Please Enter City in Search Field</h2>";
+        todayDetails.innerHTML = "";
         console.log(error);
     }
 };
@@ -47,8 +51,7 @@ const forecast = document.querySelector(".forecast");
 
 function displayWeatherData(data) {
     console.log(data);
-    const [todaysInfo, forecast] = [...data];
-    console.log(todaysInfo, forecast);
+    const [todaysInfo, imperial] = [...data];
 
     weatherMessage.innerHTML = `
 		<img title= "${
@@ -63,22 +66,22 @@ function displayWeatherData(data) {
     todayDetails.innerHTML = `
 		<div>
 			<p>Feels like</p> 
-			<span>${todaysInfo.main.feels_like}&#8457</span>
+			<span>${todaysInfo.main.feels_like}${imperial ? "&#8457" : "&#8451"}</span>
 		</div>
 		
 		<div>
 			<p>Temperature </p> 
-			<span>${todaysInfo.main.temp}&#8457</span>
+			<span>${todaysInfo.main.temp}${imperial ? "&#8457" : "&#8451"}</span>
 		</div>
 		
 		<div>
 			<p>Min Temp </p>
-			<span>${todaysInfo.main.temp_min}&#8457</span>
+			<span>${todaysInfo.main.temp_min}${imperial ? "&#8457" : "&#8451"}</span>
 		</div>
 		
 		<div>
 			<p>Max Temp </p>
-			<span>${todaysInfo.main.temp_max}&#8457</span>
+			<span>${todaysInfo.main.temp_max}${imperial ? "&#8457" : "&#8451"}</span>
 		</div>
 		
 		<div>
@@ -87,11 +90,21 @@ function displayWeatherData(data) {
 		</div>
 		
 	`;
-    // forecast.innerHTML('
-
-    // 	';
-    // )
 }
+
+const fahr = document.querySelector(".fahr");
+const cel = document.querySelector(".cel");
+
+fahr.addEventListener("click", (e) => {
+    cel.classList.remove("selected");
+    fahr.classList.add("selected");
+    getWeatherData(e);
+});
+cel.addEventListener("click", (e) => {
+    fahr.classList.remove("selected");
+    cel.classList.add("selected");
+    getWeatherData(e, false);
+});
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
