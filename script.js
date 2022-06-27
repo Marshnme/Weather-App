@@ -40,29 +40,57 @@ const getWeatherData = async (e) => {
 };
 
 const form = document.querySelector("form");
+
 const weatherMessage = document.querySelector(".weather-message");
 const todayDetails = document.querySelector(".today-details");
+const forecast = document.querySelector(".forecast");
+
 function displayWeatherData(data) {
     console.log(data);
     const [todaysInfo, forecast] = [...data];
     console.log(todaysInfo, forecast);
 
     weatherMessage.innerHTML = `
-		<img src=http://openweathermap.org/img/wn/${
-            todaysInfo.weather[0].icon
-        }@2x.png></img>
+		<img title= "${
+            todaysInfo.weather[0].description
+        }" src=http://openweathermap.org/img/wn/${
+        todaysInfo.weather[0].icon
+    }@2x.png></img>
 		<h2>${capitalizeFirstLetter(
             todaysInfo.weather[0].description
         )} in ${capitalizeFirstLetter(search.value.split(",")[0])}!</h2>`;
-
+    // {/* <h2>Today's Details</h2> */}
     todayDetails.innerHTML = `
-		<h2>Today's Details</h2>
-		<p>Feels like: <span>${todaysInfo.main.feels_like}&#8457</span></p> 
-		<p>Temperature: <span>${todaysInfo.main.temp}&#8457</span></p> 
-		<p>Min Temp: <span>${todaysInfo.main.temp_min}&#8457</span></p> 
-		<p>Max Temp: <span>${todaysInfo.main.temp_max}&#8457</span></p> 
-		<p>Humidity: <span>${todaysInfo.main.humidity}%</span></p>
+		<div>
+			<p>Feels like</p> 
+			<span>${todaysInfo.main.feels_like}&#8457</span>
+		</div>
+		
+		<div>
+			<p>Temperature </p> 
+			<span>${todaysInfo.main.temp}&#8457</span>
+		</div>
+		
+		<div>
+			<p>Min Temp </p>
+			<span>${todaysInfo.main.temp_min}&#8457</span>
+		</div>
+		
+		<div>
+			<p>Max Temp </p>
+			<span>${todaysInfo.main.temp_max}&#8457</span>
+		</div>
+		
+		<div>
+			<p>Humidity </p>
+			<span>${todaysInfo.main.humidity}%</span>
+		</div>
+		
 	`;
+    // forecast.innerHTML('
+
+    // 	';
+    // )
 }
 
 function capitalizeFirstLetter(string) {

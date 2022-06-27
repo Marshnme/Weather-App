@@ -19,8 +19,9 @@
 }
 
 html{
-    height: 120vh;
+    height: 100%;
 }
+
 
 body{
     height:100%;
@@ -44,11 +45,16 @@ nav{
     grid-area: nav;
 }
 
+nav h1{
+    font-size: 2rem;
+}
+
 nav ul {
     display: flex;
     flex-flow: row nowrap;
     text-decoration: none;
     list-style: none;
+    font-size: 1.2rem;
 
 }
 
@@ -68,18 +74,20 @@ input{
     outline:none;
     max-width: 300px;
     width: 30vw;
+    margin:0rem 1rem
 }
 
 main{
     background: var(--light-green);
     display:grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
     grid-template-areas: 
-    '... message today-details'
-    '... ... ...';
-    padding-top:3rem;
+    ' message '
+    'today-details';
+    padding-top:1rem;
     grid-area: main;
+    
 }
 
 .weather-message{
@@ -87,6 +95,8 @@ main{
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
 }
 
 .weather-message img {
@@ -96,10 +106,26 @@ main{
 
 .today-details{
     grid-area: today-details;
+    display:flex;   
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    font-size: 1.5rem;
+    padding: 3rem 0;
 }
 
 .today-details > *{
     padding: 1rem 1rem;
+}
+
+.today-details p{
+    font-size: 1.2rem;
+
+}
+
+.today-details div span{
+    display: inline-block;
+    padding-top: .5rem;
 }
 
 footer{
